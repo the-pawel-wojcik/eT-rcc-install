@@ -4,7 +4,7 @@ This document describes how to get a working version of the
 account.
 
 ## Place to work
-```sh
+```bash
 mkdir -p apps/eT2  # it's "eT2" not "eT" because it didn't work the first time
 cd eT2
 ```
@@ -12,18 +12,18 @@ the rest of the instructions will assume you are in the `eT2` dir.
 
 This will be an intel installation and the programs will be installed to this
 directory
-```sh
+```bash
 mkdir intel21
 ```
 
 ## Setup environment
 Python will be used at various stages of the install. Setup the venv
-```sh
+```bash
 python -m venv et
 ```
 
 Before any next steps call these lines to clean your environment
-```sh
+```bash
 conda deactivate
 module purge
 module load intel/21
@@ -31,7 +31,7 @@ module load intel/21
 ```
 
 ## Get eT
-Get the [eT](https://etprogram.org/) website and click the red Download
+Go to the [eT](https://etprogram.org/) website and click the red download
 button from the top menu. It will take you to a
 [gitlab](https://gitlab.com/eT-program/eT/-/releases) releases page. Download
 the program from there. At the time of writing, the January 2024 version
@@ -50,7 +50,7 @@ Use the legacy version from the eT's website. The link to the download was in
 the readme of the eT release.
 
 1. Download the old libint version which works with eT.
-```sh
+```bash
 cd downloads
 wget https://www.etprogram.org/libint/libint-2.7.0-beta.6.tgz
 tar xvf libint-2.7.0-beta.6.tgz
@@ -61,7 +61,7 @@ mv libint-2.7.0-beta.6 ../libint
 2. Build libint (takes a lot of time). Instructions for Intel compilers.
 
 As the installation is very long use the compute node for it
-```sh
+```bash
 srun --pty --mem 80G -t 4:00:00 -n12 -A backfill2 /bin/bash
 # setup the environment
 conda deactivate
@@ -87,7 +87,7 @@ or submit the build job to the queue using the script `compile-libint.sh`
 ## Install eT
 The eT authors made it "easier" for the users and wrapped `cmake` call into the
 `setup.py` script. Run it like this
-```sh
+```bash
 ./setup.py\
     --clean-dir\
     --int64\
@@ -99,9 +99,14 @@ The eT authors made it "easier" for the users and wrapped `cmake` call into the
     --extra-cmake-flags=" -GNinja -D LIBINT2_ROOT:PATH=~/apps/eT2/intel21"\
     build
 ```
-After this step compile the program with
-```sh
+After this step, compile the program with
+```bash
 cmake --build build
 ```
 The eT readme file does not share information on the program installation. It is
-recommended to include the `build` in the `PATH`, instead.
+recommended to include the `build` in the `PATH`, instead
+```bash
+# e.g., add at the end of you  ~/.bashrc
+export PATH="$PATH:~/apps/eT2/eT-v1.9.13/build"
+```
+Now you have access to `eT` and `eT_launch.py` programs.
