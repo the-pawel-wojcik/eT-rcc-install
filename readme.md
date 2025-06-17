@@ -84,7 +84,7 @@ cmake --build build --target install
 ```
 or submit the build job to the queue using the script `compile-libint.sh`
 
-## Install eT
+## Building eT
 The eT authors made it "easier" for the users and wrapped `cmake` call into the
 `setup.py` script. Run it like this
 ```bash
@@ -103,10 +103,24 @@ After this step, compile the program with
 ```bash
 cmake --build build
 ```
+
+## Installation
 The eT readme file does not share information on the program installation. It is
 recommended to include the `build` in the `PATH`, instead
 ```bash
 # e.g., add at the end of you  ~/.bashrc
 export PATH="$PATH:~/apps/eT2/eT-v1.9.13/build"
+export eT_SCRATCH=/gpfs/research/scratch/${USER}
+export eT_SAVE=/gpfs/research/scratch/${USER}
 ```
 Now you have access to `eT` and `eT_launch.py` programs.
+
+The `eT_SCRATCH`, and `eT_SAVE` variables are used by the `eT` program. Read the
+[RCC scratch](https://docs.rcc.fsu.edu/storage/scratch/) instructions. You need
+to send one email to the RCC's support to get access to the scratch.
+
+You might want to set the `OMP_NUM_THREADS`, `MKL_NUM_THREADS` variables too.
+
+## Use 
+The program is ready to use it. Use instructions are available in the very well
+written [manual](https://etprogram.org/user_manual.html#).
